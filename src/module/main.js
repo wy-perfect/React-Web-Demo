@@ -6,14 +6,18 @@ import './main.css';
 
 // 自定义链接样式
 function Menu(props) {
-  let {to, mname, isExact, icon} = props;
+  // 组件传递过来的属性
+  let {to, mname, icon} = props;
   return (
-    <Route path={to} exact={isExact} children={({match})=>{
+    <Route path={to} children={({match})=>{
+      // 控制链接图标动态高亮
+      let iconClass = 'iconfont icon-' + icon;
+      iconClass = match? iconClass + ' active': iconClass;
       return (
         <Link to={to}>
           <div className={'placeholder'}>
-            <i className={'iconfont icon-all'}></i>
-            <div className={"active"}>{mname}</div>
+            <i className={iconClass}></i>
+            <div className={match?'active':''}>{mname}</div>
           </div>
         </Link>
       );
@@ -37,16 +41,16 @@ class Main extends React.Component {
           <Grid columns={4} divided>
             <Grid.Row>
               <Grid.Column>
-                <Menu to='/home/main' isExact={true} icon='all' mname='主页'/>
+                <Menu to='/home/main' mname='主页' icon='all'/>
               </Grid.Column>
               <Grid.Column>
-                <Menu to='/home/info' icon='all' mname='资讯'/>
+                <Menu to='/home/info' mname='资讯' icon='search'/>
               </Grid.Column>
               <Grid.Column>
-                <Menu to='/home/chat' icon='all' mname='微聊'/>
+                <Menu to='/home/chat' mname='微聊' icon='atm'/>
               </Grid.Column>
               <Grid.Column>
-                <Menu to='/home/my' icon='all' mname='我的'/>
+                <Menu to='/home/my' mname='我的' icon='account'/>
               </Grid.Column>
             </Grid.Row>
           </Grid>
