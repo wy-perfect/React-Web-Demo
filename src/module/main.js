@@ -4,6 +4,12 @@ import { Link, Route, Switch } from "react-router-dom";
 
 import './main.css';
 
+// 引入子组件
+import Home from './home/index';
+import Info from './info/index';
+import Chat from './chat/index';
+import My from './my/index';
+
 // 自定义链接样式
 function Menu(props) {
   // 组件传递过来的属性
@@ -31,10 +37,10 @@ class Main extends React.Component {
       <div className='main-container'>
         <div className="main-content">
           <Switch>
-            <Route path='/home/main' render={()=><div>main</div>}/>
-            <Route path='/home/info' render={()=><div>info</div>}/>
-            <Route path='/home/chat' render={()=><div>chat</div>}/>
-            <Route path='/home/my' render={()=><div>my</div>}/>
+            <Route path='/home/main' component={Home}/>
+            <Route path='/home/info' component={Info}/>
+            <Route path='/home/chat' component={Chat}/>
+            <Route path='/home/my' component={My}/>
           </Switch>
         </div>
         <div className="main-menu">
