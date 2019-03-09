@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // 导入需要的UI组件
 import { Button, Icon, Form, Divider } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 // 导入样式
 import './login.css';
 
@@ -36,7 +37,12 @@ class Login extends React.Component {
       uname: this.state.username,
       pwd: this.state.password
     });
-    console.log(ret)
+    // console.log(ret.data.data.token)
+    // 存储token信息到sessionStorage中
+    sessionStorage.setItem('mytoken', ret.data.data.token);
+    // 跳转到主页
+    let {history} = this.props;
+    history.push('/home');
   }
   render() {
     return (
@@ -79,4 +85,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
