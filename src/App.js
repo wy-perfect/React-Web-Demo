@@ -4,8 +4,14 @@ import './App.css';
 // 导入组件库的样式
 import 'semantic-ui-css/semantic.min.css'
 
+import AuthCheck from './auth';
 import Login from './login';
 import Main from './module/main';
+
+
+function Abc() {
+  return <div>123456</div>;
+}
 
 class App extends Component {
   render() {
@@ -14,6 +20,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route path="/home" component={Main}/>
+          <AuthCheck path='/abc' component={Abc}/>
         </Switch>
       </BrowserRouter>
     );
