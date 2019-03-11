@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Grid, Icon, Item, Button } from 'semantic-ui-react';
+import { Input, Grid, Icon, Item, Button, Dimmer, Loader } from 'semantic-ui-react';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 import './index.css';
@@ -153,31 +153,53 @@ class Home extends React.Component {
       menu: [],   // 菜单数据
       info: [],  // 资讯数据
       faq: [],  // 问答数据
-      house: [],  // 房源数据
+      house: [],  // 房源数据,
+      loadFlag: true // 数据加载状态位
     }
   }
 
   // 封装统一的数据加载功能
   loadData = (pathName, dataName) => {
-    axios.post(pathName).then(res=>{
+    // 这里的return是loadData的返回值，实际上就是Promise实例对象
+    return axios.post(pathName).then(res=>{
       // 对象属性的名称可以是动态的（可以是变量）
-      this.setState({
-        [dataName]: res.data.list
-      });
+      // this.setState({
+      //   [dataName]: res.data.list
+      // });
+      // 这个返回值是实际的数据，该数据传递给下一个then
+      // 如果在then中返回具体的数据，那么在下一个then中可以获取该数据
+      return res.data.list;
     });
   }
 
   componentDidMount() {
     // 获取轮播图图片数据
-    this.loadData('homes/swipe', 'swipe');
+    let swipe = this.loadData('homes/swipe', 'swipe');
     // 获取菜单的图书
-    this.loadData('homes/menu', 'menu');
+    let menu = this.loadData('homes/menu', 'menu');
     // 获取资讯数据
-    this.loadData('homes/info', 'info');
+    let info = this.loadData('homes/info', 'info');
     // 获取问答数据
-    this.loadData('/homes/faq', 'faq');
+    let faq = this.loadData('/homes/faq', 'faq');
     // 获取房源数据
-    this.loadData('/homes/house', 'house');
+    let house = this.loadData('/homes/house', 'house');
+    // 设置加载状态位，控制遮罩效果
+    // Promise.all的作用，发送所有的异步请求，并且所有的结果返回之后触发then
+    Promise.all([swipe, menu, info, faq, house]).then(ret=>{
+      // 统一更新数据
+      this.setState({
+        swipe: ret[0],
+        menu: ret[1],
+        info: ret[2],
+        faq: ret[3],
+        house: ret[4],
+      }, () => {
+        // 所有的数据已经返回，隐藏遮罩效果
+        this.setState({
+          loadFlag: false
+        });
+      });
+    });
   }
 
   render() {
@@ -187,6 +209,10 @@ class Home extends React.Component {
         <div className='home-topbar'>
           <Input fluid icon='search' placeholder='Search...' />
         </div>
+        {/*遮罩效果*/}
+        <Dimmer inverted active={this.state.loadFlag} page>
+          <Loader>Loading</Loader>
+        </Dimmer>
         <div className="home-content">
           {/*轮播图*/}
           <div>
