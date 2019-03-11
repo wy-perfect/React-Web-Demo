@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Icon } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { Link, Route, Switch } from "react-router-dom";
 
 import './main.css';

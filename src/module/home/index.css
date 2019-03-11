@@ -1,9 +1,7 @@
 .home-container {
-  background-color: orange;
   height: 100%;
 }
 .home-container .home-searchbar {
   height: 40px;
   line-height: 40px;
-  background-color: blue;
 }
