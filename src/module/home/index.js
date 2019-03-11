@@ -31,8 +31,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      swipe: [],
-      menu: []
+      swipe: [], // 轮播图数据
+      menu: []   // 菜单数据
     }
   }
 
@@ -40,13 +40,13 @@ class Home extends React.Component {
     // 获取轮播图图片数据
     axios.post('homes/swipe').then(res=>{
       this.setState({
-        swipe: res.data.data.list
+        swipe: res.data.list
       });
     });
     // 获取菜单的图书
     axios.post('/homes/menu').then(res=>{
       this.setState({
-        menu: res.data.data.list
+        menu: res.data.list
       });
     });
   }
@@ -55,9 +55,11 @@ class Home extends React.Component {
     
     return (
       <div className='home-container'>
+        {/*搜索条*/}
         <div className='home-topbar'>
           <Input fluid icon='search' placeholder='Search...' />
         </div>
+        {/*轮播图*/}
         <div>
           <ImageGallery 
             showThumbnails={false} 
@@ -65,6 +67,7 @@ class Home extends React.Component {
             showFullscreenButton={false}
             items={this.state.swipe} />
         </div>
+        {/*菜单*/}
         <div>
           <Menu menuData={this.state.menu}/>
         </div>

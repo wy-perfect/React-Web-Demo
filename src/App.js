@@ -23,6 +23,13 @@ axios.interceptors.request.use(function (config) {
 }, function (error) {
   return Promise.reject(error);
 });
+// axios响应拦截器
+axios.interceptors.response.use(function (response) {
+  // response是axios包装之后的数据
+  return response.data;
+}, function (error) {
+  return Promise.reject(error);
+});
 
 function Abc() {
   return <div>123456</div>;
