@@ -129,17 +129,19 @@ class Home extends React.Component {
             showFullscreenButton={false}
             items={this.state.swipe} />
         </div>
-        {/*菜单*/}
-        <div>
-          <Menu menuData={this.state.menu}/>
-        </div>
-        {/*资讯*/}
-        <div>
-          <Info infoData={this.state.info}/>
-        </div>
-        {/*问答*/}
-        <div>
-          <Faq faqData={this.state.faq}/>
+        <div className="home-content">
+          {/*菜单*/}
+          <div>
+            <Menu menuData={this.state.menu}/>
+          </div>
+          {/*资讯*/}
+          <div>
+            <Info infoData={this.state.info}/>
+          </div>
+          {/*问答*/}
+          <div>
+            <Faq faqData={this.state.faq}/>
+          </div>
         </div>
       </div>
     );
