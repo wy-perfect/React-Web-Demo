@@ -1,9 +1,10 @@
 import React from 'react';
-import { Input, Grid, Icon } from 'semantic-ui-react';
+import { Input, Grid, Icon, Item } from 'semantic-ui-react';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 import './index.css';
 import axios from 'axios';
+import { baseURL } from '../../common';
 
 // 菜单组件
 function Menu(props) {
@@ -27,12 +28,41 @@ function Menu(props) {
   );
 }
 
+// 资讯组件
+function Info(props) {
+  let {infoData} = props;
+  let infoContent = infoData.map(item=>{
+    return (
+      <Item.Header key={item.id}>
+        <span>限购 ●</span>
+        <span>{item.info_title}</span>
+      </Item.Header>
+    );
+  });
+  return (
+    <div className='home-msg'>
+      <Item.Group unstackable>
+        <Item className='home-msg-img' >
+          <Item.Image size='tiny' src={baseURL+'public/zixun.png'} />
+          <Item.Content verticalAlign='top'>
+            {infoContent}
+            <div className="home-msg-more">
+              <Icon name='angle right' size='big' />
+            </div>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+    </div>
+  );
+}
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       swipe: [], // 轮播图数据
-      menu: []   // 菜单数据
+      menu: [],   // 菜单数据
+      info: [],  // 资讯数据
     }
   }
 
@@ -51,10 +81,11 @@ class Home extends React.Component {
     this.loadData('homes/swipe', 'swipe');
     // 获取菜单的图书
     this.loadData('homes/menu', 'menu');
+    // 获取资讯数据
+    this.loadData('homes/info', 'info');
   }
 
   render() {
-    
     return (
       <div className='home-container'>
         {/*搜索条*/}
@@ -72,6 +103,10 @@ class Home extends React.Component {
         {/*菜单*/}
         <div>
           <Menu menuData={this.state.menu}/>
+        </div>
+        {/*资讯*/}
+        <div>
+          <Info infoData={this.state.info}/>
         </div>
       </div>
     );
