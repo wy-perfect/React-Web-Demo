@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Grid, Icon, Item } from 'semantic-ui-react';
+import { Input, Grid, Icon, Item, Button } from 'semantic-ui-react';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 import './index.css';
@@ -60,6 +60,10 @@ function Info(props) {
 function Faq(props) {
   let {faqData} = props;
   let faqContent = faqData.map(item=>{
+    let arr = item.question_tag.split(',');
+    let btns = arr.map((item,index)=>{
+      return <Button key={index} basic color='green' size='mini'>{item}</Button>
+    });
     return (
       <li key={item.question_id}>
         <div>
@@ -67,6 +71,7 @@ function Faq(props) {
           <span>{item.question_name}</span>
         </div>
         <div>
+          {btns}
           <div>{item.atime} ● <Icon name='comment alternate outline' /> {item.qnum}</div>
         </div>
       </li>
@@ -121,15 +126,15 @@ class Home extends React.Component {
         <div className='home-topbar'>
           <Input fluid icon='search' placeholder='Search...' />
         </div>
-        {/*轮播图*/}
-        <div>
-          <ImageGallery 
-            showThumbnails={false} 
-            showPlayButton={false}
-            showFullscreenButton={false}
-            items={this.state.swipe} />
-        </div>
         <div className="home-content">
+          {/*轮播图*/}
+          <div>
+            <ImageGallery 
+              showThumbnails={false} 
+              showPlayButton={false}
+              showFullscreenButton={false}
+              items={this.state.swipe} />
+          </div>
           {/*菜单*/}
           <div>
             <Menu menuData={this.state.menu}/>
