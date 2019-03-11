@@ -14,6 +14,15 @@ import { baseURL } from './common';
 import axios from 'axios';
 // axios的基准路径配置
 axios.defaults.baseURL = baseURL;
+// 统一处理接口的token（axios请求拦截器）
+axios.interceptors.request.use(function (config) {
+  if(!config.url.endsWith('/')){
+    config.headers.Authorization = sessionStorage.getItem('mytoken');
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
 
 function Abc() {
   return <div>123456</div>;
