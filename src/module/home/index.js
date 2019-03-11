@@ -56,6 +56,32 @@ function Info(props) {
   );
 }
 
+// 问答组件
+function Faq(props) {
+  let {faqData} = props;
+  let faqContent = faqData.map(item=>{
+    return (
+      <li key={item.question_id}>
+        <div>
+          <Icon name='question circle outline' />
+          <span>{item.question_name}</span>
+        </div>
+        <div>
+          <div>{item.atime} ● <Icon name='comment alternate outline' /> {item.qnum}</div>
+        </div>
+      </li>
+    );
+  });
+  return (
+    <div className='home-ask'>
+      <div className='home-ask-title'>好客问答</div>
+      <ul>
+        {faqContent}
+      </ul>
+    </div>
+  );
+}
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -63,6 +89,7 @@ class Home extends React.Component {
       swipe: [], // 轮播图数据
       menu: [],   // 菜单数据
       info: [],  // 资讯数据
+      faq: [],  // 问答数据
     }
   }
 
@@ -83,6 +110,8 @@ class Home extends React.Component {
     this.loadData('homes/menu', 'menu');
     // 获取资讯数据
     this.loadData('homes/info', 'info');
+    // 获取问答数据
+    this.loadData('/homes/faq', 'faq');
   }
 
   render() {
@@ -107,6 +136,10 @@ class Home extends React.Component {
         {/*资讯*/}
         <div>
           <Info infoData={this.state.info}/>
+        </div>
+        {/*问答*/}
+        <div>
+          <Faq faqData={this.state.faq}/>
         </div>
       </div>
     );
