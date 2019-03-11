@@ -110,10 +110,10 @@ function House(props) {
       </Item>
     );
     // 根据item.home_type区分是那种房源信息
-    if(item.home_type === '1') {
+    if(item.home_type === 1) {
       // 新房
       newHouse.push(itemContent);
-    }else if(item.home_type === '2') {
+    }else if(item.home_type === 2) {
       // 二手房
       oldHouse.push(itemContent);
     }else{
