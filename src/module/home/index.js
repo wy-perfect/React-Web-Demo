@@ -9,26 +9,13 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      swipe: [
-        {
-          original: 'http://lorempixel.com/1000/600/nature/1/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/1/',
-        },
-        {
-          original: 'http://lorempixel.com/1000/600/nature/2/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/2/'
-        },
-        {
-          original: 'http://lorempixel.com/1000/600/nature/3/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/3/'
-        }
-      ]
+      swipe: []
     }
   }
 
   componentDidMount() {
     // 获取轮播图图片数据
-    axios.post('http://47.96.21.88:8086/homes/swipe').then(res=>{
+    axios.post('homes/swipe').then(res=>{
       this.setState({
         swipe: res.data.data.list
       });

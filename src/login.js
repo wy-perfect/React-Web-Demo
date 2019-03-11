@@ -3,6 +3,7 @@ import axios from 'axios';
 // 导入需要的UI组件
 import { Button, Icon, Form, Divider } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+// import { baseUrl } from './common';
 // 导入样式
 import './login.css';
 
@@ -33,7 +34,7 @@ class Login extends React.Component {
     // console.log(this.state.username)
     // console.log(this.state.password)
 
-    let ret = await axios.post('http://47.96.21.88:8086/users/login', {
+    let ret = await axios.post('users/login', {
       uname: this.state.username,
       pwd: this.state.password
     });

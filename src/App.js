@@ -10,6 +10,10 @@ import AuthCheck from './auth';
 import Login from './login';
 import Main from './module/main';
 
+import { baseURL } from './common';
+import axios from 'axios';
+// axios的基准路径配置
+axios.defaults.baseURL = baseURL;
 
 function Abc() {
   return <div>123456</div>;
