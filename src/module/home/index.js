@@ -36,19 +36,21 @@ class Home extends React.Component {
     }
   }
 
+  // 封装统一的数据加载功能
+  loadData = (pathName, dataName) => {
+    axios.post(pathName).then(res=>{
+      // 对象属性的名称可以是动态的（可以是变量）
+      this.setState({
+        [dataName]: res.data.list
+      });
+    });
+  }
+
   componentDidMount() {
     // 获取轮播图图片数据
-    axios.post('homes/swipe').then(res=>{
-      this.setState({
-        swipe: res.data.list
-      });
-    });
+    this.loadData('homes/swipe', 'swipe');
     // 获取菜单的图书
-    axios.post('/homes/menu').then(res=>{
-      this.setState({
-        menu: res.data.list
-      });
-    });
+    this.loadData('homes/menu', 'menu');
   }
 
   render() {
