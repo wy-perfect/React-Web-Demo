@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Grid, Icon, Item, Button, Dimmer, Loader } from 'semantic-ui-react';
 import ImageGallery from 'react-image-gallery';
+import { withRouter } from 'react-router-dom';
 import "react-image-gallery/styles/css/image-gallery.css";
 import './index.css';
 import axios from 'axios';
@@ -8,10 +9,16 @@ import { baseURL } from '../../common';
 
 // 菜单组件
 function Menu(props) {
-  let {menuData} = props;
+  let { menuData, history } = props;
+  let handleMenu = (p, e) => {
+    // 根据不同的菜单跳转到不同的位置
+    // 如何跳转？通过withRouter提供的history对象进行跳转
+    history.push('/');
+  }
+  
   let menuInfo = menuData.map(item=>{
     return (
-      <Grid.Column key={item.id}>
+      <Grid.Column onClick={handleMenu.bind(this, item.menu_name)} key={item.id}>
         <div className='home-menu-item'>
           <Icon name='home' size='big' />
         </div>
@@ -203,6 +210,8 @@ class Home extends React.Component {
   }
 
   render() {
+    // 该history对象是withRouter提供的
+    let {history} = this.props;
     return (
       <div className='home-container'>
         {/*搜索条*/}
@@ -224,7 +233,7 @@ class Home extends React.Component {
           </div>
           {/*菜单*/}
           <div>
-            <Menu menuData={this.state.menu}/>
+            <Menu history={history} menuData={this.state.menu}/>
           </div>
           {/*资讯*/}
           <div>
@@ -244,4 +253,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
