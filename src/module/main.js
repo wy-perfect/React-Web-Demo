@@ -9,6 +9,9 @@ import Home from './home/index';
 import Info from './info/index';
 import Chat from './chat/index';
 import My from './my/index';
+import Hlist from './home/hlist';
+import Calc from './home/calculator';
+import Map from './home/map';
 
 // 自定义链接样式
 function Menu(props) {
@@ -41,6 +44,9 @@ class Main extends React.Component {
             <Route path='/home/info' component={Info}/>
             <Route path='/home/chat' component={Chat}/>
             <Route path='/home/my' component={My}/>
+            <Route path='/home/list' component={Hlist}/>
+            <Route path='/home/calc' component={Calc}/>
+            <Route path='/home/map' component={Map}/>
           </Switch>
         </div>
         <div className="main-menu">
