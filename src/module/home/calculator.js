@@ -55,7 +55,7 @@ class MyChart extends React.Component {
   }
 
   handle = () => {
-    // 更新数据
+    // 更新数据(修改option中的数据并不会导致图表更新；必须显示的调用setOption)
     let arr = [...this.state.data];
     arr[0].value = 1000;
     this.setState({

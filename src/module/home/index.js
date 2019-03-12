@@ -31,6 +31,9 @@ function Menu(props) {
       case '计算器':
         history.push('/home/calc', {query: {mname: p}});
         break;
+      case '地图找房':
+        history.push('/home/map', {query: {mname: p}});
+        break;
       default:
         console.log('other')
         break;
