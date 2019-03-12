@@ -8,12 +8,13 @@ import { baseURL } from '../../common';
 
 // 菜单组件
 function Menu(props) {
+  
   let {menuData} = props;
   let menuInfo = menuData.map(item=>{
     return (
       <Grid.Column key={item.id}>
         <div className='home-menu-item'>
-          <Icon name='home' size='big' />
+          <Icon name='home  ' size='big' />
         </div>
         <div>{item.menu_name}</div>
       </Grid.Column>
@@ -89,6 +90,8 @@ function Faq(props) {
 
 // 房源组件
 function House(props) {
+  console.log(props);
+  
   let {houseData} = props;
   let newHouse = [];
   let oldHouse = [];

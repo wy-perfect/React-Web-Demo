@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 
 class AuthCheck extends React.Component {
-  render() {
+  render() { 
     const { component: Component, path } = this.props;
     // 验证登录情况:如果isLogin是true，证明登录过，否则没有登录（跳转到登录页）
     let isLogin = sessionStorage.getItem('mytoken')?true:false;
