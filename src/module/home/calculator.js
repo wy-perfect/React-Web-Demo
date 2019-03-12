@@ -3,7 +3,6 @@ import { Icon, Tab, Grid, Dropdown, Input, Button } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 class Calculator extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -47,6 +46,13 @@ class Calculator extends React.Component {
     this.setState({ 
       total: e.target.value
     });
+  }
+  // 处理计算功能
+  handleCalc = () => {
+    console.log(this.state.total)
+    console.log(this.state.type)
+    console.log(this.state.rate)
+    console.log(this.state.year)
   }
 
   render() {
@@ -129,7 +135,7 @@ class Calculator extends React.Component {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Button fluid color='green'>计算</Button>
+            <Button onClick={this.handleCalc} fluid color='green'>计算</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
