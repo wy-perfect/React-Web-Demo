@@ -13,7 +13,25 @@ function Menu(props) {
   let handleMenu = (p, e) => {
     // 根据不同的菜单跳转到不同的位置
     // 如何跳转？通过withRouter提供的history对象进行跳转
-    history.push('/');
+    // history.push('/');
+    switch(p){
+      case '二手房':
+        // 跳转到房源列表页
+        history.push('/home/list', {query: {mname: p, type: 1}});
+        break;
+      case '新房':
+        history.push('/home/list', {query: {mname: p, type: 2}});
+        break;
+      case '租房':
+        history.push('/home/list', {query: {mname: p, type: 3}});
+        break;
+      case '海外':
+        history.push('/home/list', {query: {mname: p, type: 4}});
+        break;
+      default:
+        console.log('other')
+        break;
+    }
   }
   
   let menuInfo = menuData.map(item=>{
