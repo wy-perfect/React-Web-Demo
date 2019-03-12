@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Tab, Grid, Dropdown } from 'semantic-ui-react';
+import { Icon, Tab, Grid, Dropdown, Input, Button } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 class Calculator extends React.Component {
@@ -7,7 +7,10 @@ class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: ''
+      type: '',
+      year: 0,
+      rate: 0,
+      total: 0
     }
   }
 
@@ -27,12 +30,50 @@ class Calculator extends React.Component {
     });
   }
 
+  handleYear = (e, {value}) => {
+    this.setState({ 
+      year: value
+    });
+  }
+
+  handleRate = (e, {value}) => {
+    this.setState({ 
+      rate: value
+    });
+  }
+
+  hadleTotal = (e) => {
+    // Input组件数据的绑定方式和原始方式一致
+    this.setState({ 
+      total: e.target.value
+    });
+  }
+
   render() {
     // 贷款方式下拉选项数据
     const types = [
       { key: 1, text: '按房间总额', value: 1 },
       { key: 2, text: '按贷款总额', value: 2 },
     ];
+    // 贷款年限的选项数据
+    const generateYears = (n) => {
+      let arr = [];
+      for(let i=1;i<=n;i++) {
+        arr.push({
+          key : i,
+          text: i,
+          value: i
+        });
+      }
+      return arr;
+    }
+    // 贷款利率选项数据
+    const rates = [
+      {key: 1,text: '基准利率(3.25%)',value: 1},
+      {key: 2,text: '基准利率9.5折',value: 2},
+      {key: 3,text: '基准利率9折',value: 3},
+      {key: 4,text: '基准利率8.5折',value: 4}
+    ]
     // 公积金贷款信息模板
     let first = (
       <Grid columns={2}>
@@ -48,6 +89,47 @@ class Calculator extends React.Component {
               onChange={this.handleType}
               value={this.state.type}
               />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            贷款总额
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Input value={this.state.total} onChange={this.hadleTotal} className='calc-first-total' placeholder='贷款总额' />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            贷款年限
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Dropdown
+              onChange={this.handleYear}
+              options={generateYears(25)}
+              placeholder='请选择年限'
+              selection
+              value={this.state.year}
+            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            贷款利率
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Dropdown
+              onChange={this.handleRate}
+              options={rates}
+              placeholder='请选择利率'
+              selection
+              value={this.state.rate}
+            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Button fluid color='green'>计算</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
