@@ -5,6 +5,15 @@ import ReactEcharts from 'echarts-for-react';
 
 // 封装图表组件
 class MyChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [
+        {value:335, name:'贷款总额'},
+        {value:310, name:'支付利息'}
+      ]
+    }
+  }
   getOptions = () => {
     // 该选项来自于百度echarts官方的案例中option
     let option = {
@@ -26,10 +35,7 @@ class MyChart extends React.Component {
         type: 'pie',
         radius : '55%',
         center: ['50%', '60%'],
-        data:[
-          {value:335, name:'贷款总额'},
-          {value:310, name:'支付利息'}
-        ],
+        data: this.state.data,
         itemStyle: {
           emphasis: {
             shadowBlur: 10,
@@ -42,9 +48,39 @@ class MyChart extends React.Component {
     return option;
   }
 
+  componentDidMount() {
+    let echartRef = this.echartRef;
+    let { updateChart } = this.props;
+    updateChart(echartRef);
+  }
+
+  handle = () => {
+    // 更新数据
+    let arr = [...this.state.data];
+    arr[0].value = 1000;
+    this.setState({
+      data: arr
+    });
+    // 调用echarts的setOption()
+    // echartRef表示非受控组件的引用
+    // getEchartsInstance表示echarts的实例对象
+    // setOption是echarts的官方api，作用就是更新图表效果
+    let opt = this.getOptions();
+    this.echartRef.getEchartsInstance().setOption(opt);
+  }
+
   render() {
     return (
-      <ReactEcharts option={this.getOptions()}/>
+      <div>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Button onClick={this.handle} fluid color='green'>计算123</Button>
+          </Grid.Column>
+        </Grid.Row>
+        <ReactEcharts 
+          ref={(e) => { this.echartRef = e; }}
+          option={this.getOptions()}/>
+      </div>
     );
   }
 }
@@ -56,7 +92,8 @@ class Calculator extends React.Component {
       type: '',
       year: 0,
       rate: 0,
-      total: 0
+      total: 0,
+      echartRef: null
     }
   }
 
@@ -96,10 +133,18 @@ class Calculator extends React.Component {
   }
   // 处理计算功能
   handleCalc = () => {
-    console.log(this.state.total)
-    console.log(this.state.type)
-    console.log(this.state.rate)
-    console.log(this.state.year)
+    // console.log(this.state.total)
+    // console.log(this.state.type)
+    // console.log(this.state.rate)
+    // console.log(this.state.year)
+    // 这里应该控制子组件（图表组件）中数据发生变化
+    console.log(this.state.echartRef)
+  }
+
+  updateChart = (p) => {
+    this.setState({
+      echartRef: p
+    });
   }
 
   render() {
@@ -180,13 +225,13 @@ class Calculator extends React.Component {
             />
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
+        {/*<Grid.Row>
           <Grid.Column width={16}>
             <Button onClick={this.handleCalc} fluid color='green'>计算</Button>
           </Grid.Column>
-        </Grid.Row>
+        </Grid.Row>*/}
         <div className="calc-chart">
-          <MyChart/>
+          <MyChart updateChart={this.updateChart}/>
         </div>
       </Grid>
     );
